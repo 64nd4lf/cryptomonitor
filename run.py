@@ -20,12 +20,12 @@ for base_curr in range(len(crpa_curr)):
 #cryptopia ltc-and-doge-markets only currencies price load
 crpa_ld_curr = ['bun', 'rbbt']
 for base_curr in range(len(crpa_ld_curr)):
-        url = 'https://www.cryptopia.co.nz/api/GetMarketOrderGroups/{}_ltc-{}_doge/1'.format(crpa_ld_curr[base_curr], crpa_ld_curr[base_curr])
-        req = urllib2.Request(url)
-        resp = urllib2.urlopen(req)
-        content = resp.read()
-        with open('crpa-{}.json'.format(crpa_ld_curr[base_curr]), 'w') as outfile:
-                json.dump(content, outfile)
+	url = 'https://www.cryptopia.co.nz/api/GetMarketOrderGroups/{}_ltc-{}_doge/1'.format(crpa_ld_curr[base_curr], crpa_ld_curr[base_curr])
+	req = urllib2.Request(url)
+	resp = urllib2.urlopen(req)
+	content = resp.read()
+	with open('crpa-{}.json'.format(crpa_ld_curr[base_curr]), 'w') as outfile:
+		json.dump(content, outfile)
 
 #tradesatoshi price load
 tsat_curr = ['trc', 'bun', 'piggy', 'nka', 'sha', 'nyan', 'emc2', '808', '611', 'comp', 'net', 'rdd', 'kmd']
@@ -48,7 +48,7 @@ for mid in mids:
 	resp = urllib2.urlopen(req)
 	content = resp.read()
 	with open('cio-{}.json'.format(mid), 'w') as outfile:
-        	json.dump(content, outfile)
+		json.dump(content, outfile)
 
 #getting exchange rates
 for k in range(len(markets)):
@@ -66,25 +66,25 @@ def btc(v):
 	value = float(udat["ticker"]["price"])
 	return v/value
 def ltc(v):
-        dat = json.load(open('ex-doge-ltc.json'))
-        udat = json.loads(dat)
-        value = float(udat["ticker"]["price"])
-        return v/value
+	dat = json.load(open('ex-doge-ltc.json'))
+	udat = json.loads(dat)
+	value = float(udat["ticker"]["price"])
+	return v/value
 def bch(v):
-        dat = json.load(open('ex-doge-bch.json'))
-        udat = json.loads(dat)
-        value = float(udat["ticker"]["price"])
-        return v/value
+	dat = json.load(open('ex-doge-bch.json'))
+	udat = json.loads(dat)
+	value = float(udat["ticker"]["price"])
+	return v/value
 def etc(v):
-        dat = json.load(open('ex-doge-etc.json'))
-        udat = json.loads(dat)
-        value = float(udat["ticker"]["price"])
-        return v/value
+	dat = json.load(open('ex-doge-etc.json'))
+	udat = json.loads(dat)
+	value = float(udat["ticker"]["price"])
+	return v/value
 def eth(v):
-        dat = json.load(open('ex-doge-eth.json'))
-        udat = json.loads(dat)
-        value = float(udat["ticker"]["price"])
-        return v/value
+	dat = json.load(open('ex-doge-eth.json'))
+	udat = json.loads(dat)
+	value = float(udat["ticker"]["price"])
+	return v/value
 
 #comparing markets
 buy = []
@@ -104,7 +104,7 @@ for x in curr_dat:
 						b_rate = eval(k)(b_rate)
 						s_rate = eval(k)(s_rate)
 					buy.append(b_rate)
-                                        sell.append(s_rate)
+					sell.append(s_rate)
 			elif z == 'tsat':
 				#print "All four"
 				for k in range(0, 4):
@@ -112,10 +112,10 @@ for x in curr_dat:
 					udat = json.loads(dat)
 					b_rate = float(udat["result"]["bid"])
 					s_rate = float(udat["result"]["ask"])
-                                        if tsat_mar[k] != 'doge':
-                                                b_rate = eval(tsat_mar[k])(b_rate)
+					if tsat_mar[k] != 'doge':
+						b_rate = eval(tsat_mar[k])(b_rate)
 						s_rate = eval(tsat_mar[k])(s_rate)
-                                        buy.append(b_rate)
+					buy.append(b_rate)
 					sell.append(s_rate)
 			else:
 				if curr_dat[x][y][z] == 3:
@@ -138,25 +138,25 @@ for x in curr_dat:
 							b_rate = ltc(b_rate)
 							s_rate = ltc(s_rate)
 						buy.append(b_rate)
-                                        	sell.append(s_rate)
+						sell.append(s_rate)
 				else:
 					#print "Only two"
-                                        dat = json.load(open('{}-{}.json'.format(z, x)))
-                                        udat = json.loads(dat)
-                                        for k in range(0, 2):
-                                                if len(udat["Data"][k]["Buy"]) != 0:
-                                                        b_rate = float(udat["Data"][k]["Buy"][0]["Price"])
-                                                else:
-                                                        b_rate = 0.0
-                                                if len(udat["Data"][k]["Sell"]) != 0:
-                                                        s_rate = float(udat["Data"][k]["Sell"][0]["Price"])
-                                                else:
-                                                        s_rate = 0.0
-                                                if k == 1:
-                                                        b_rate = ltc(b_rate)
-                                                        s_rate = ltc(s_rate)
+					dat = json.load(open('{}-{}.json'.format(z, x)))
+					udat = json.loads(dat)
+					for k in range(0, 2):
+						if len(udat["Data"][k]["Buy"]) != 0:
+							b_rate = float(udat["Data"][k]["Buy"][0]["Price"])
+						else:
+							b_rate = 0.0
+						if len(udat["Data"][k]["Sell"]) != 0:
+							s_rate = float(udat["Data"][k]["Sell"][0]["Price"])
+						else:
+							s_rate = 0.0
+						if k == 1:
+							b_rate = ltc(b_rate)
+							s_rate = ltc(s_rate)
 						buy.append(b_rate)
-                                        	sell.append(s_rate)
+						sell.append(s_rate)
 	#print buy
 	#print sell
 	max_buy = max([w for w in buy if w != 0])
@@ -170,7 +170,7 @@ for x in curr_dat:
 	more_info["m_dat"] = curr_dat[x]
 	#print "B - {}, S-{}".format(min_sell, max_buy)
 	with open('mi-{}.txt'.format(x), 'w') as outfile:
-        	json.dump(more_info, outfile)
+		json.dump(more_info, outfile)
 	del buy[:]
 	del sell[:]
 	#print "----------------------"
@@ -181,14 +181,14 @@ length = len(mar_diff[keys[0]])
 
 items = ['<html><head><script src="sorttable.js"></script> <link rel="stylesheet" type="text/css" href="style.css"><title>CryptoMonitor</title></head><body>', '<table class="sortable">', '<tr>']
 for k in keys:
-    items.append('<td>%s</td>' % k)
+	items.append('<td>%s</td>' % k)
 items.append('</tr>')
 
 for i in range(length):
-    items.append('<tr>')
-    for k in keys:
-        items.append('<td><a target="_blank" style="text-decoration:none;" href="mi-{}.txt">{}</a></td>'.format(mar_diff['Currency'][i], mar_diff[k][i]))
-    items.append('</tr>')
+	items.append('<tr>')
+	for k in keys:
+		items.append('<td><a target="_blank" style="text-decoration:none;" href="mi-{}.txt">{}</a></td>'.format(mar_diff['Currency'][i], mar_diff[k][i]))
+	items.append('</tr>')
 
 items.append('</table></body>')
 
