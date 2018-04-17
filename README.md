@@ -6,3 +6,7 @@ The program first loads the buy sell data of every currency on each website to f
 The best buy and sell rates are calculated for every currency listed on curr_data is computed and then stored onto a file. A html file is built which displays each currency and the %profit that we can gain by buy and sell that currency. We can sort this table based on the %profits. Each item on the table is a hyperlink which takes us to another page in a new tab that displays detailed info and from which we can know from where to buy for cheapest and sell for highest price. 
 
 The latest code is 8 times faster and computes 4 times as many currencies as the previous one. I have reduced the HTTP requests in the code which slowed down the execution time in the first place.
+
+I have created an EC2 micro instance on AWS and uploaded this code to the instance. I have scheduled a cronjob using crontab to run this build.py code every two minutes. So every two minutes the prices will be updated. I turn on the instance when I have time and look for any profitable trades and then turn the instance off when I don't want to monitor.
+
+Warning: Sometimes currencies will be in maintenance during which period you can't deposit or withdraw money. So before making a transaction, make sure the currency's wallet is up and active on both the websites.
